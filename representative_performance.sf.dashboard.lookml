@@ -21,7 +21,7 @@
   - name: count_won_deals
     title: 'Count of Won Deals (This Quarter)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.count_won]
     listen:
@@ -31,14 +31,13 @@
       opportunity.close_date: 'this quarter'
     limit: 500
     font_size: small
-    text_color: '#49719a'
     width: 3
     height: 2
 
   - name: salesrep_total_revenue
     title: 'Salesrep - Total Revenue (This Quarter)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.total_revenue]
     listen:
@@ -48,14 +47,13 @@
       opportunity.close_date: 'this quarter'
     limit: 500
     font_size: small
-    text_color: '#49719a'
     width: 3
     height: 2
 
   - name: count_lost_deals
     title: 'Count of Lost Deals (This Quarter)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.count_lost]
     listen:
@@ -65,14 +63,13 @@
       opportunity.close_date: 'this quarter'
     limit: 500
     font_size: small
-    text_color: '#49719a'
     width: 3
     height: 2
 
   - name: win_percentage
     title: 'Win Percentage of Closed Deals (This Quarter)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.win_percentage]
     listen:
@@ -82,14 +79,13 @@
       opportunity.close_date: 'this quarter'
     limit: 500
     font_size: small
-    text_color: '#49719a'
     width: 3
     height: 2
 
   - name: opportunities_to_wins_trend_peers
     title: 'Opportunities to Wins Trend vs. Peers'
     type: looker_line
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity.created_month, opportunity_owner.rep_comparitor]
     pivots: [opportunity_owner.rep_comparitor]
@@ -108,9 +104,7 @@
     sorts: [opportunity.created_month desc, opportunity_owner.rep_comparitor]
     limit: 500
     column_limit: 50
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#635189', '#b3a0dd', '#a2dcf3', '#1ea8df']
     show_value_labels: false
     label_density: 25
     font_size: small
@@ -135,7 +129,7 @@
   - name: salesrep_revenue_won_comparison
     title: 'SalesRep - Revenue Won comparison'
     type: looker_bar
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity_owner.rep_comparitor]
     measures: [opportunity.average_revenue_won]
@@ -144,12 +138,9 @@
       sales_rep: opportunity_owner.name_select
     sorts: [opportunity_owner.rep_comparitor]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#a2dcf3']
     show_value_labels: true
     label_density: 25
-    label_color: ['#635189']
     font_size: small
     legend_position: center
     hide_legend: false
@@ -171,7 +162,7 @@
   - name: salesrep_win_rate_comparison
     title: 'SalesRep - Win Rate Comparison'
     type: looker_bar
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity_owner.rep_comparitor]
     measures: [opportunity.win_percentage]
@@ -180,12 +171,9 @@
       sales_rep: opportunity_owner.name_select
     sorts: [opportunity_owner.rep_comparitor]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#a2dcf3']
     show_value_labels: true
     label_density: 25
-    label_color: ['#635189']
     font_size: small
     legend_position: center
     hide_legend: false
@@ -207,7 +195,7 @@
   - name: salesrep_revenue_pipeline_comparison
     title: 'SalesRep - Revenue Pipeline comparison'
     type: looker_bar
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity_owner.rep_comparitor]
     measures: [opportunity_owner.average_revenue_pipeline]
@@ -216,12 +204,9 @@
       sales_rep: opportunity_owner.name_select
     sorts: [opportunity_owner.rep_comparitor]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#a2dcf3']
     show_value_labels: true
     label_density: 25
-    label_color: ['#635189']
     font_size: small
     legend_position: center
     hide_legend: false

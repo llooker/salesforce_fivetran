@@ -15,7 +15,7 @@
   - name: total_active_customers
     title: 'Total Active Customers'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: account
     measures: [account.count]
     listen:
@@ -24,14 +24,13 @@
       account.type: '"Customer"'
     sorts: [account.count desc]
     font_size: medium
-    text_color: '#49719a'
     height: 2
     width: 4
 
   - name: total_revenue_this_quarter
     title: 'Total Revenue Closed (Quarter-to-Date)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.total_revenue]
     filters:
@@ -46,7 +45,7 @@
   - name: average_deal_size_this_quarter
     title: 'Average Deal Size (Quarter-to-Date)'
     type: single_value
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     measures: [opportunity.average_deal_size]
     filters:
@@ -61,7 +60,7 @@
   - name: lead_to_win_funnel_this_quarter
     title: 'Lead to Win Funnel (Quarter-to-Date)'
     type: looker_column
-    model: salesforce
+    model: salesforce_fivetran
     explore: lead
     measures: [lead.count, opportunity.count_new_business, opportunity.count_new_business_won]
     listen:
@@ -71,12 +70,9 @@
       lead.created_date: this quarter
     sorts: [lead.count desc]
     limit: 500
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#635189', '#a2dcf3', '#1ea8df']
     show_value_labels: true
     label_density: 10
-    label_color: ['#635189', '#a2dcf3', '#1ea8df']
     legend_position: center
     x_axis_gridlines: false
     y_axis_gridlines: true
@@ -100,7 +96,7 @@
   - name: deals_closed_by_segment
     title: 'Deals Closed by Segment'
     type: looker_area
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity.close_month, account.business_segment]
     pivots: [account.business_segment]
@@ -133,7 +129,7 @@
   - name: prospects_by_forecast_category_and_segment
     title: 'Prospects by Forecast Category and Segment'
     type: looker_donut_multiples
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [account.business_segment, opportunity.forecast_category]
     pivots: [opportunity.forecast_category]
@@ -156,7 +152,7 @@
   - name: pipeline_forecast
     title: 'Pipeline Forecast'
     type: looker_column
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity.probability_group, opportunity.close_month]
     pivots: [opportunity.probability_group]
@@ -164,10 +160,8 @@
     filters:
       opportunity.close_month: 9 months ago for 12 months
     sorts: [opportunity.probability_group, opportunity.close_month, opportunity.probability_group__sort_]
-    query_timezone: America/Los_Angeles
     stacking: normal
     hidden_series: [Under 20%, Lost]
-    colors: [lightgrey, '#1FD110', '#95d925', '#d0ca0e', '#c77706', '#bf2006', black]
     show_value_labels: true
     label_density: 21
     legend_position: center
@@ -194,7 +188,7 @@
   - name: sales_segment_performance
     title: 'Sales Segment Performance'
     type: looker_column
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [account.business_segment]
     measures: [account.count_customers, opportunity.total_revenue]
@@ -205,8 +199,6 @@
     limit: 500
     column_limit: 50
     stacking: ''
-    colors: ['#62bad4', '#a9c574', '#929292', '#9fdee0', '#1f3e5a', '#90c8ae', '#92818d',
-      '#c5c6a6', '#82c2ca', '#cee0a0', '#928fb4', '#9fc190']
     show_value_labels: true
     label_density: 25
     font_size: 12
@@ -227,7 +219,7 @@
   - name: rep_roster_and_total_pipeline_revenue
     title: 'Rep Roster By Average Annual Revenue and Total Pipeline Revenue'
     type: looker_column
-    model: salesforce
+    model: salesforce_fivetran
     explore: opportunity
     dimensions: [opportunity_owner.name]
     measures: [opportunity.total_pipeline_revenue, opportunity.average_revenue_won]
@@ -236,9 +228,7 @@
       opportunity.count_won: '>0'
     sorts: [opportunity_owner.name desc]
     limit: 12
-    query_timezone: America/Los_Angeles
     stacking: ''
-    colors: ['#635189', '#b3a0dd']
     show_value_labels: true
     label_density: 25
     legend_position: center
