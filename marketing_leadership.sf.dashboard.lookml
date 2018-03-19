@@ -21,7 +21,7 @@
     listen:
       state: account.billing_state
     filters:
-      account.type: '"Customer"'
+      account.is_customer: '"Yes"'
     sorts: [account.count desc]
     font_size: medium
     height: 2

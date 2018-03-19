@@ -3,9 +3,10 @@ view: account {
   extends: [_account]
   # dimensions #
 
-  dimension: created {
-    #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
-  }
+ dimension: is_customer {
+   type: yesno
+  sql: ${type} LIKE 'Customer%' ;;
+ }
 
   dimension: business_segment {
     type: string
@@ -57,8 +58,8 @@ view: account {
     type: count
 
     filters: {
-      field: account.type
-      value: "\"Customer\""
+      field: is_customer
+      value: "yes"
     }
   }
 }
