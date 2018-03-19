@@ -1,6 +1,6 @@
 # preliminaries #
 
-connection: "salesforce"
+connection: "fivetran_looker_blocks_demo"
 
 include: "*.view"
 

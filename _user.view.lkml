@@ -1,11 +1,25 @@
 view: _user {
-  sql_table_name: salesforce._user ;;
-  # dimensions #
+  extension: required
+  sql_table_name: salesforce.user ;;
 
   dimension: id {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+  }
+
+  dimension_group: _fivetran_synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._fivetran_synced ;;
   }
 
   dimension: about_me {
@@ -15,7 +29,7 @@ view: _user {
 
   dimension: account_id {
     type: string
-    hidden: yes
+    # hidden: yes
     sql: ${TABLE}.account_id ;;
   }
 
@@ -29,9 +43,13 @@ view: _user {
     sql: ${TABLE}.badge_text ;;
   }
 
+  dimension: banner_photo_url {
+    type: string
+    sql: ${TABLE}.banner_photo_url ;;
+  }
+
   dimension: call_center_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.call_center_id ;;
   }
 
@@ -52,24 +70,32 @@ view: _user {
 
   dimension: contact_id {
     type: string
-    hidden: yes
+    # hidden: yes
     sql: ${TABLE}.contact_id ;;
   }
 
   dimension: country {
     type: string
+    map_layer_name: countries
     sql: ${TABLE}.country ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.created_by_id ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.created_date ;;
   }
 
@@ -80,7 +106,6 @@ view: _user {
 
   dimension: delegated_approver_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.delegated_approver_id ;;
   }
 
@@ -159,19 +184,24 @@ view: _user {
     sql: ${TABLE}.full_photo_url ;;
   }
 
+  dimension: geocode_accuracy {
+    type: string
+    sql: ${TABLE}.geocode_accuracy ;;
+  }
+
   dimension: is_active {
     type: yesno
     sql: ${TABLE}.is_active ;;
   }
 
-  dimension: is_badged {
+  dimension: is_profile_photo_active {
     type: yesno
-    sql: ${TABLE}.is_badged ;;
+    sql: ${TABLE}.is_profile_photo_active ;;
   }
 
-  dimension: is_portal_enabled {
-    type: yesno
-    sql: ${TABLE}.is_portal_enabled ;;
+  dimension: jigsaw_import_limit_override {
+    type: number
+    sql: ${TABLE}.jigsaw_import_limit_override ;;
   }
 
   dimension: language_locale_key {
@@ -181,19 +211,34 @@ view: _user {
 
   dimension_group: last_login {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_login_date ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.last_modified_by_id ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_modified_date ;;
   }
 
@@ -204,19 +249,43 @@ view: _user {
 
   dimension_group: last_password_change {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_password_change_date ;;
   }
 
   dimension_group: last_referenced {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_referenced_date ;;
   }
 
   dimension_group: last_viewed {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_viewed_date ;;
   }
 
@@ -237,7 +306,6 @@ view: _user {
 
   dimension: manager_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.manager_id ;;
   }
 
@@ -253,24 +321,35 @@ view: _user {
 
   dimension_group: offline_pda_trial_expiration {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.offline_pda_trial_expiration_date ;;
   }
 
   dimension_group: offline_trial_expiration {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.offline_trial_expiration_date ;;
   }
 
   dimension: phone {
     type: string
     sql: ${TABLE}.phone ;;
-  }
-
-  dimension: portal_role {
-    type: string
-    sql: ${TABLE}.portal_role ;;
   }
 
   dimension: postal_code {
@@ -280,7 +359,6 @@ view: _user {
 
   dimension: profile_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.profile_id ;;
   }
 
@@ -341,7 +419,15 @@ view: _user {
 
   dimension_group: system_modstamp {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.system_modstamp ;;
   }
 
@@ -355,24 +441,24 @@ view: _user {
     sql: ${TABLE}.title ;;
   }
 
-  dimension: user_permissions_avantgo_user {
-    type: yesno
-    sql: ${TABLE}.user_permissions_avantgo_user ;;
-  }
-
   dimension: user_permissions_call_center_auto_login {
     type: yesno
     sql: ${TABLE}.user_permissions_call_center_auto_login ;;
   }
 
-  dimension: user_permissions_chatter_answers_user {
-    type: yesno
-    sql: ${TABLE}.user_permissions_chatter_answers_user ;;
-  }
-
   dimension: user_permissions_interaction_user {
     type: yesno
     sql: ${TABLE}.user_permissions_interaction_user ;;
+  }
+
+  dimension: user_permissions_jigsaw_prospecting_user {
+    type: yesno
+    sql: ${TABLE}.user_permissions_jigsaw_prospecting_user ;;
+  }
+
+  dimension: user_permissions_knowledge_user {
+    type: yesno
+    sql: ${TABLE}.user_permissions_knowledge_user ;;
   }
 
   dimension: user_permissions_marketing_user {
@@ -395,6 +481,26 @@ view: _user {
     sql: ${TABLE}.user_permissions_sfcontent_user ;;
   }
 
+  dimension: user_permissions_siteforce_contributor_user {
+    type: yesno
+    sql: ${TABLE}.user_permissions_siteforce_contributor_user ;;
+  }
+
+  dimension: user_permissions_siteforce_publisher_user {
+    type: yesno
+    sql: ${TABLE}.user_permissions_siteforce_publisher_user ;;
+  }
+
+  dimension: user_permissions_support_user {
+    type: yesno
+    sql: ${TABLE}.user_permissions_support_user ;;
+  }
+
+  dimension: user_permissions_work_dot_com_user_feature {
+    type: yesno
+    sql: ${TABLE}.user_permissions_work_dot_com_user_feature ;;
+  }
+
   dimension: user_preferences_activity_reminders_popup {
     type: yesno
     sql: ${TABLE}.user_preferences_activity_reminders_popup ;;
@@ -403,6 +509,21 @@ view: _user {
   dimension: user_preferences_apex_pages_developer_mode {
     type: yesno
     sql: ${TABLE}.user_preferences_apex_pages_developer_mode ;;
+  }
+
+  dimension: user_preferences_cache_diagnostics {
+    type: yesno
+    sql: ${TABLE}.user_preferences_cache_diagnostics ;;
+  }
+
+  dimension: user_preferences_content_email_as_and_when {
+    type: yesno
+    sql: ${TABLE}.user_preferences_content_email_as_and_when ;;
+  }
+
+  dimension: user_preferences_content_no_email {
+    type: yesno
+    sql: ${TABLE}.user_preferences_content_no_email ;;
   }
 
   dimension: user_preferences_dis_comment_after_like_email {
@@ -438,6 +559,11 @@ view: _user {
   dimension: user_preferences_disable_endorsement_email {
     type: yesno
     sql: ${TABLE}.user_preferences_disable_endorsement_email ;;
+  }
+
+  dimension: user_preferences_disable_feedback_email {
+    type: yesno
+    sql: ${TABLE}.user_preferences_disable_feedback_email ;;
   }
 
   dimension: user_preferences_disable_file_share_notifications_for_api {
@@ -480,6 +606,11 @@ view: _user {
     sql: ${TABLE}.user_preferences_disable_share_post_email ;;
   }
 
+  dimension: user_preferences_disable_work_email {
+    type: yesno
+    sql: ${TABLE}.user_preferences_disable_work_email ;;
+  }
+
   dimension: user_preferences_enable_auto_sub_for_feeds {
     type: yesno
     sql: ${TABLE}.user_preferences_enable_auto_sub_for_feeds ;;
@@ -515,9 +646,19 @@ view: _user {
     sql: ${TABLE}.user_preferences_hide_second_chatter_onboarding_splash ;;
   }
 
+  dimension: user_preferences_jigsaw_list_user {
+    type: yesno
+    sql: ${TABLE}.user_preferences_jigsaw_list_user ;;
+  }
+
   dimension: user_preferences_lightning_experience_preferred {
     type: yesno
     sql: ${TABLE}.user_preferences_lightning_experience_preferred ;;
+  }
+
+  dimension: user_preferences_path_assistant_collapsed {
+    type: yesno
+    sql: ${TABLE}.user_preferences_path_assistant_collapsed ;;
   }
 
   dimension: user_preferences_reminder_sound_off {
@@ -550,9 +691,19 @@ view: _user {
     sql: ${TABLE}.user_preferences_show_email_to_external_users ;;
   }
 
+  dimension: user_preferences_show_email_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_email_to_guest_users ;;
+  }
+
   dimension: user_preferences_show_fax_to_external_users {
     type: yesno
     sql: ${TABLE}.user_preferences_show_fax_to_external_users ;;
+  }
+
+  dimension: user_preferences_show_fax_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_fax_to_guest_users ;;
   }
 
   dimension: user_preferences_show_manager_to_external_users {
@@ -560,9 +711,19 @@ view: _user {
     sql: ${TABLE}.user_preferences_show_manager_to_external_users ;;
   }
 
+  dimension: user_preferences_show_manager_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_manager_to_guest_users ;;
+  }
+
   dimension: user_preferences_show_mobile_phone_to_external_users {
     type: yesno
     sql: ${TABLE}.user_preferences_show_mobile_phone_to_external_users ;;
+  }
+
+  dimension: user_preferences_show_mobile_phone_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_mobile_phone_to_guest_users ;;
   }
 
   dimension: user_preferences_show_postal_code_to_external_users {
@@ -595,6 +756,11 @@ view: _user {
     sql: ${TABLE}.user_preferences_show_street_address_to_external_users ;;
   }
 
+  dimension: user_preferences_show_street_address_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_street_address_to_guest_users ;;
+  }
+
   dimension: user_preferences_show_title_to_external_users {
     type: yesno
     sql: ${TABLE}.user_preferences_show_title_to_external_users ;;
@@ -610,6 +776,16 @@ view: _user {
     sql: ${TABLE}.user_preferences_show_work_phone_to_external_users ;;
   }
 
+  dimension: user_preferences_show_work_phone_to_guest_users {
+    type: yesno
+    sql: ${TABLE}.user_preferences_show_work_phone_to_guest_users ;;
+  }
+
+  dimension: user_preferences_sort_feed_by_comment {
+    type: yesno
+    sql: ${TABLE}.user_preferences_sort_feed_by_comment ;;
+  }
+
   dimension: user_preferences_task_reminders_checkbox_default {
     type: yesno
     sql: ${TABLE}.user_preferences_task_reminders_checkbox_default ;;
@@ -617,7 +793,6 @@ view: _user {
 
   dimension: user_role_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.user_role_id ;;
   }
 
@@ -631,25 +806,29 @@ view: _user {
     sql: ${TABLE}.username ;;
   }
 
-  # measures #
-
   measure: count {
     type: count
     drill_fields: [detail*]
   }
 
-  # sets #
-
+  # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
       id,
-      username,
-      last_name,
-      first_name,
-      name,
+      community_nickname,
       company_name,
+      last_name,
       sender_name,
-      community_nickname
+      name,
+      first_name,
+      username,
+      account.id,
+      account.name,
+      contact.name,
+      contact.jigsaw_contact_id,
+      contact.assistant_name,
+      contact.first_name,
+      contact.last_name
     ]
   }
 }

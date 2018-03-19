@@ -1,11 +1,25 @@
 view: _lead {
-  sql_table_name: salesforce._lead ;;
-  # dimensions #
+  extension: required
+  sql_table_name: salesforce.lead ;;
 
   dimension: id {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+  }
+
+  dimension_group: _fivetran_synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._fivetran_synced ;;
   }
 
   dimension: annual_revenue {
@@ -16,6 +30,11 @@ view: _lead {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+  }
+
+  dimension: clean_status {
+    type: string
+    sql: ${TABLE}.clean_status ;;
   }
 
   dimension: company {
@@ -30,44 +49,66 @@ view: _lead {
 
   dimension: converted_account_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.converted_account_id ;;
   }
 
   dimension: converted_contact_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.converted_contact_id ;;
   }
 
   dimension_group: converted {
     type: time
-    timeframes: [time, date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.converted_date ;;
   }
 
   dimension: converted_opportunity_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.converted_opportunity_id ;;
   }
 
   dimension: country {
     type: string
+    map_layer_name: countries
     sql: ${TABLE}.country ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.created_by_id ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.created_date ;;
+  }
+
+  dimension: current_generators_c {
+    type: string
+    sql: ${TABLE}.current_generators_c ;;
+  }
+
+  dimension: dandb_company_id {
+    type: string
+    sql: ${TABLE}.dandb_company_id ;;
   }
 
   dimension: description {
@@ -82,7 +123,15 @@ view: _lead {
 
   dimension_group: email_bounced {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.email_bounced_date ;;
   }
 
@@ -91,9 +140,19 @@ view: _lead {
     sql: ${TABLE}.email_bounced_reason ;;
   }
 
+  dimension: fax {
+    type: string
+    sql: ${TABLE}.fax ;;
+  }
+
   dimension: first_name {
     type: string
     sql: ${TABLE}.first_name ;;
+  }
+
+  dimension: geocode_accuracy {
+    type: string
+    sql: ${TABLE}.geocode_accuracy ;;
   }
 
   dimension: industry {
@@ -116,10 +175,27 @@ view: _lead {
     sql: ${TABLE}.is_unread_by_owner ;;
   }
 
+  dimension: jigsaw {
+    type: string
+    sql: ${TABLE}.jigsaw ;;
+  }
+
+  dimension: jigsaw_contact_id {
+    type: string
+    sql: ${TABLE}.jigsaw_contact_id ;;
+  }
+
   dimension_group: last_activity {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_activity_date ;;
   }
 
@@ -130,7 +206,15 @@ view: _lead {
 
   dimension_group: last_modified {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_modified_date ;;
   }
 
@@ -141,13 +225,29 @@ view: _lead {
 
   dimension_group: last_referenced {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_referenced_date ;;
   }
 
   dimension_group: last_viewed {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_viewed_date ;;
   }
 
@@ -168,8 +268,12 @@ view: _lead {
 
   dimension: master_record_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.master_record_id ;;
+  }
+
+  dimension: mobile_phone {
+    type: string
+    sql: ${TABLE}.mobile_phone ;;
   }
 
   dimension: name {
@@ -182,9 +286,13 @@ view: _lead {
     sql: ${TABLE}.number_of_employees ;;
   }
 
+  dimension: numberof_locations_c {
+    type: number
+    sql: ${TABLE}.numberof_locations_c ;;
+  }
+
   dimension: owner_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.owner_id ;;
   }
 
@@ -203,15 +311,29 @@ view: _lead {
     sql: ${TABLE}.postal_code ;;
   }
 
-  dimension: record_type_id {
+  dimension: primary_c {
     type: string
-    hidden: yes
-    sql: ${TABLE}.record_type_id ;;
+    sql: ${TABLE}.primary_c ;;
+  }
+
+  dimension: product_interest_c {
+    type: string
+    sql: ${TABLE}.product_interest_c ;;
+  }
+
+  dimension: rating {
+    type: string
+    sql: ${TABLE}.rating ;;
   }
 
   dimension: salutation {
     type: string
     sql: ${TABLE}.salutation ;;
+  }
+
+  dimension: siccode_c {
+    type: string
+    sql: ${TABLE}.siccode_c ;;
   }
 
   dimension: state {
@@ -231,7 +353,15 @@ view: _lead {
 
   dimension_group: system_modstamp {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.system_modstamp ;;
   }
 
@@ -245,10 +375,8 @@ view: _lead {
     sql: ${TABLE}.website ;;
   }
 
-  # measures #
-
   measure: count {
     type: count
-    drill_fields: [id, last_name, first_name, name]
+    drill_fields: [id, name, first_name, last_name]
   }
 }

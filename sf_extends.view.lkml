@@ -1,3 +1,4 @@
+include: "_*"
 view: account {
   extends: [_account]
   # dimensions #

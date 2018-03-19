@@ -1,11 +1,40 @@
 view: _account {
-  sql_table_name: salesforce._account ;;
-  # dimensions #
+  extension: required
+  sql_table_name: salesforce.account ;;
 
   dimension: id {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+  }
+
+  dimension_group: _fivetran_synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._fivetran_synced ;;
+  }
+
+  dimension: account_number {
+    type: string
+    sql: ${TABLE}.account_number ;;
+  }
+
+  dimension: account_source {
+    type: string
+    sql: ${TABLE}.account_source ;;
+  }
+
+  dimension: active_c {
+    type: string
+    sql: ${TABLE}.active_c ;;
   }
 
   dimension: annual_revenue {
@@ -21,6 +50,11 @@ view: _account {
   dimension: billing_country {
     type: string
     sql: ${TABLE}.billing_country ;;
+  }
+
+  dimension: billing_geocode_accuracy {
+    type: string
+    sql: ${TABLE}.billing_geocode_accuracy ;;
   }
 
   dimension: billing_latitude {
@@ -48,16 +82,38 @@ view: _account {
     sql: ${TABLE}.billing_street ;;
   }
 
+  dimension: clean_status {
+    type: string
+    sql: ${TABLE}.clean_status ;;
+  }
+
   dimension: created_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.created_by_id ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.created_date ;;
+  }
+
+  dimension: customer_priority_c {
+    type: string
+    sql: ${TABLE}.customer_priority_c ;;
+  }
+
+  dimension: dandb_company_id {
+    type: string
+    sql: ${TABLE}.dandb_company_id ;;
   }
 
   dimension: description {
@@ -85,40 +141,79 @@ view: _account {
     sql: ${TABLE}.is_deleted ;;
   }
 
+  dimension: jigsaw {
+    type: string
+    sql: ${TABLE}.jigsaw ;;
+  }
+
+  dimension: jigsaw_company_id {
+    type: string
+    sql: ${TABLE}.jigsaw_company_id ;;
+  }
+
   dimension_group: last_activity {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_activity_date ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.last_modified_by_id ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_modified_date ;;
   }
 
   dimension_group: last_referenced {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_referenced_date ;;
   }
 
   dimension_group: last_viewed {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_viewed_date ;;
   }
 
   dimension: master_record_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.master_record_id ;;
   }
 
@@ -142,15 +237,23 @@ view: _account {
     sql: ${TABLE}.number_of_employees ;;
   }
 
+  dimension: numberof_locations_c {
+    type: number
+    sql: ${TABLE}.numberof_locations_c ;;
+  }
+
   dimension: owner_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.owner_id ;;
+  }
+
+  dimension: ownership {
+    type: string
+    sql: ${TABLE}.ownership ;;
   }
 
   dimension: parent_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.parent_id ;;
   }
 
@@ -164,10 +267,9 @@ view: _account {
     sql: ${TABLE}.photo_url ;;
   }
 
-  dimension: record_type_id {
+  dimension: rating {
     type: string
-    hidden: yes
-    sql: ${TABLE}.record_type_id ;;
+    sql: ${TABLE}.rating ;;
   }
 
   dimension: shipping_city {
@@ -178,6 +280,11 @@ view: _account {
   dimension: shipping_country {
     type: string
     sql: ${TABLE}.shipping_country ;;
+  }
+
+  dimension: shipping_geocode_accuracy {
+    type: string
+    sql: ${TABLE}.shipping_geocode_accuracy ;;
   }
 
   dimension: shipping_latitude {
@@ -205,10 +312,67 @@ view: _account {
     sql: ${TABLE}.shipping_street ;;
   }
 
+  dimension: sic {
+    type: string
+    sql: ${TABLE}.sic ;;
+  }
+
+  dimension: sic_desc {
+    type: string
+    sql: ${TABLE}.sic_desc ;;
+  }
+
+  dimension: site {
+    type: string
+    sql: ${TABLE}.site ;;
+  }
+
+  dimension: sla_c {
+    type: string
+    sql: ${TABLE}.sla_c ;;
+  }
+
+  dimension_group: slaexpiration_date_c {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.slaexpiration_date_c ;;
+  }
+
+  dimension: slaserial_number_c {
+    type: string
+    sql: ${TABLE}.slaserial_number_c ;;
+  }
+
   dimension_group: system_modstamp {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.system_modstamp ;;
+  }
+
+  dimension: ticker_symbol {
+    type: string
+    sql: ${TABLE}.ticker_symbol ;;
+  }
+
+  dimension: tradestyle {
+    type: string
+    sql: ${TABLE}.tradestyle ;;
   }
 
   dimension: type {
@@ -216,15 +380,23 @@ view: _account {
     sql: ${TABLE}.type ;;
   }
 
+  dimension: upsell_opportunity_c {
+    type: string
+    sql: ${TABLE}.upsell_opportunity_c ;;
+  }
+
   dimension: website {
     type: string
     sql: ${TABLE}.website ;;
   }
 
-  # measures #
+  dimension: year_started {
+    type: string
+    sql: ${TABLE}.year_started ;;
+  }
 
   measure: count {
     type: count
-    drill_fields: [id, name]
+    drill_fields: [id, name, contact.count, opportunity.count, user.count]
   }
 }

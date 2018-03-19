@@ -1,16 +1,30 @@
 view: _contact {
-  sql_table_name: salesforce._contact ;;
-  # dimensions #
+  extension: required
+  sql_table_name: salesforce.contact ;;
 
-  dimension: id {
-    type: string
+  dimension: jigsaw_contact_id {
     primary_key: yes
-    sql: ${TABLE}.id ;;
+    type: string
+    sql: ${TABLE}.jigsaw_contact_id ;;
+  }
+
+  dimension_group: _fivetran_synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._fivetran_synced ;;
   }
 
   dimension: account_id {
     type: string
-    hidden: yes
+    # hidden: yes
     sql: ${TABLE}.account_id ;;
   }
 
@@ -24,22 +38,41 @@ view: _contact {
     sql: ${TABLE}.assistant_phone ;;
   }
 
-  dimension_group: birth {
+  dimension_group: birthdate {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.birthdate ;;
+  }
+
+  dimension: clean_status {
+    type: string
+    sql: ${TABLE}.clean_status ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.created_by_id ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.created_date ;;
   }
 
@@ -60,7 +93,15 @@ view: _contact {
 
   dimension_group: email_bounced {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.email_bounced_date ;;
   }
 
@@ -84,6 +125,11 @@ view: _contact {
     sql: ${TABLE}.home_phone ;;
   }
 
+  dimension: id {
+    type: string
+    sql: ${TABLE}.id ;;
+  }
+
   dimension: is_deleted {
     type: yesno
     sql: ${TABLE}.is_deleted ;;
@@ -94,22 +140,74 @@ view: _contact {
     sql: ${TABLE}.is_email_bounced ;;
   }
 
+  dimension: jigsaw {
+    type: string
+    sql: ${TABLE}.jigsaw ;;
+  }
+
+  dimension: languages_c {
+    type: string
+    sql: ${TABLE}.languages_c ;;
+  }
+
   dimension_group: last_activity {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_activity_date ;;
+  }
+
+  dimension_group: last_curequest {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.last_curequest_date ;;
+  }
+
+  dimension_group: last_cuupdate {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.last_cuupdate_date ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.last_modified_by_id ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_modified_date ;;
   }
 
@@ -120,19 +218,40 @@ view: _contact {
 
   dimension_group: last_referenced {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_referenced_date ;;
   }
 
   dimension_group: last_viewed {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_viewed_date ;;
   }
 
   dimension: lead_source {
     type: string
     sql: ${TABLE}.lead_source ;;
+  }
+
+  dimension: level_c {
+    type: string
+    sql: ${TABLE}.level_c ;;
   }
 
   dimension: mailing_city {
@@ -143,6 +262,11 @@ view: _contact {
   dimension: mailing_country {
     type: string
     sql: ${TABLE}.mailing_country ;;
+  }
+
+  dimension: mailing_geocode_accuracy {
+    type: string
+    sql: ${TABLE}.mailing_geocode_accuracy ;;
   }
 
   dimension: mailing_latitude {
@@ -172,7 +296,6 @@ view: _contact {
 
   dimension: master_record_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.master_record_id ;;
   }
 
@@ -194,6 +317,11 @@ view: _contact {
   dimension: other_country {
     type: string
     sql: ${TABLE}.other_country ;;
+  }
+
+  dimension: other_geocode_accuracy {
+    type: string
+    sql: ${TABLE}.other_geocode_accuracy ;;
   }
 
   dimension: other_latitude {
@@ -228,7 +356,6 @@ view: _contact {
 
   dimension: owner_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.owner_id ;;
   }
 
@@ -244,7 +371,6 @@ view: _contact {
 
   dimension: reports_to_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.reports_to_id ;;
   }
 
@@ -255,7 +381,15 @@ view: _contact {
 
   dimension_group: system_modstamp {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.system_modstamp ;;
   }
 
@@ -264,10 +398,22 @@ view: _contact {
     sql: ${TABLE}.title ;;
   }
 
-  # measures #
-
   measure: count {
     type: count
-    drill_fields: [id, name]
+    drill_fields: [detail*]
+  }
+
+  # ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+      jigsaw_contact_id,
+      name,
+      assistant_name,
+      first_name,
+      last_name,
+      account.id,
+      account.name,
+      user.count
+    ]
   }
 }

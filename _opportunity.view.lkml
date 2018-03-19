@@ -1,6 +1,6 @@
 view: _opportunity {
-  sql_table_name: salesforce._opportunity ;;
-  # dimensions #
+  extension: required
+  sql_table_name: salesforce.opportunity ;;
 
   dimension: id {
     primary_key: yes
@@ -8,9 +8,23 @@ view: _opportunity {
     sql: ${TABLE}.id ;;
   }
 
+  dimension_group: _fivetran_synced {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}._fivetran_synced ;;
+  }
+
   dimension: account_id {
     type: string
-    hidden: yes
+    # hidden: yes
     sql: ${TABLE}.account_id ;;
   }
 
@@ -21,32 +35,61 @@ view: _opportunity {
 
   dimension: campaign_id {
     type: string
-    hidden: yes
+    # hidden: yes
     sql: ${TABLE}.campaign_id ;;
   }
 
   dimension_group: close {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.close_date ;;
   }
 
   dimension: created_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.created_by_id ;;
   }
 
   dimension_group: created {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.created_date ;;
+  }
+
+  dimension: current_generators_c {
+    type: string
+    sql: ${TABLE}.current_generators_c ;;
+  }
+
+  dimension: delivery_installation_status_c {
+    type: string
+    sql: ${TABLE}.delivery_installation_status_c ;;
   }
 
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+  }
+
+  dimension: expected_revenue {
+    type: number
+    sql: ${TABLE}.expected_revenue ;;
   }
 
   dimension: fiscal {
@@ -74,9 +117,19 @@ view: _opportunity {
     sql: ${TABLE}.forecast_category_name ;;
   }
 
+  dimension: has_open_activity {
+    type: yesno
+    sql: ${TABLE}.has_open_activity ;;
+  }
+
   dimension: has_opportunity_line_item {
     type: yesno
     sql: ${TABLE}.has_opportunity_line_item ;;
+  }
+
+  dimension: has_overdue_task {
+    type: yesno
+    sql: ${TABLE}.has_overdue_task ;;
   }
 
   dimension: is_closed {
@@ -89,6 +142,11 @@ view: _opportunity {
     sql: ${TABLE}.is_deleted ;;
   }
 
+  dimension: is_private {
+    type: yesno
+    sql: ${TABLE}.is_private ;;
+  }
+
   dimension: is_won {
     type: yesno
     sql: ${TABLE}.is_won ;;
@@ -96,32 +154,62 @@ view: _opportunity {
 
   dimension_group: last_activity {
     type: time
-    timeframes: [date, week, month]
-    convert_tz: no
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_activity_date ;;
   }
 
   dimension: last_modified_by_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.last_modified_by_id ;;
   }
 
   dimension_group: last_modified {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_modified_date ;;
   }
 
   dimension_group: last_referenced {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_referenced_date ;;
   }
 
   dimension_group: last_viewed {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.last_viewed_date ;;
   }
 
@@ -130,20 +218,33 @@ view: _opportunity {
     sql: ${TABLE}.lead_source ;;
   }
 
+  dimension: main_competitors_c {
+    type: string
+    sql: ${TABLE}.main_competitors_c ;;
+  }
+
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
   }
 
+  dimension: next_step {
+    type: string
+    sql: ${TABLE}.next_step ;;
+  }
+
+  dimension: order_number_c {
+    type: string
+    sql: ${TABLE}.order_number_c ;;
+  }
+
   dimension: owner_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.owner_id ;;
   }
 
   dimension: pricebook_2_id {
     type: string
-    hidden: yes
     sql: ${TABLE}.pricebook_2_id ;;
   }
 
@@ -157,16 +258,28 @@ view: _opportunity {
     sql: ${TABLE}.stage_name ;;
   }
 
-  dimension: synced_quote_id {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.synced_quote_id ;;
-  }
-
   dimension_group: system_modstamp {
     type: time
-    timeframes: [date, week, month]
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.system_modstamp ;;
+  }
+
+  dimension: total_opportunity_quantity {
+    type: number
+    sql: ${TABLE}.total_opportunity_quantity ;;
+  }
+
+  dimension: tracking_number_c {
+    type: string
+    sql: ${TABLE}.tracking_number_c ;;
   }
 
   dimension: type {
@@ -174,10 +287,22 @@ view: _opportunity {
     sql: ${TABLE}.type ;;
   }
 
-  # measures #
-
   measure: count {
     type: count
-    drill_fields: [id, name, stage_name, forecast_category_name]
+    drill_fields: [detail*]
+  }
+
+  # ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+      id,
+      stage_name,
+      forecast_category_name,
+      name,
+      campaign.id,
+      campaign.name,
+      account.id,
+      account.name
+    ]
   }
 }
