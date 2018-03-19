@@ -20,6 +20,7 @@ view: _account {
       year
     ]
     sql: ${TABLE}._fivetran_synced ;;
+    hidden: yes
   }
 
   dimension: account_number {
@@ -32,9 +33,9 @@ view: _account {
     sql: ${TABLE}.account_source ;;
   }
 
-  dimension: active_c {
-    type: string
-    sql: ${TABLE}.active_c ;;
+  dimension: is_active {
+    type: yesno
+    sql: ${TABLE}.active_c = 'Yes' ;;
   }
 
   dimension: annual_revenue {
@@ -43,41 +44,49 @@ view: _account {
   }
 
   dimension: billing_city {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_city ;;
   }
 
   dimension: billing_country {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_country ;;
   }
 
   dimension: billing_geocode_accuracy {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_geocode_accuracy ;;
   }
 
   dimension: billing_latitude {
+    group_label: "Billing Details"
     type: number
     sql: ${TABLE}.billing_latitude ;;
   }
 
   dimension: billing_longitude {
+    group_label: "Billing Details"
     type: number
     sql: ${TABLE}.billing_longitude ;;
   }
 
   dimension: billing_postal_code {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_postal_code ;;
   }
 
   dimension: billing_state {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_state ;;
   }
 
   dimension: billing_street {
+    group_label: "Billing Details"
     type: string
     sql: ${TABLE}.billing_street ;;
   }
@@ -273,41 +282,49 @@ view: _account {
   }
 
   dimension: shipping_city {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_city ;;
   }
 
   dimension: shipping_country {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_country ;;
   }
 
   dimension: shipping_geocode_accuracy {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_geocode_accuracy ;;
   }
 
   dimension: shipping_latitude {
+    group_label: "Shipping Details"
     type: number
     sql: ${TABLE}.shipping_latitude ;;
   }
 
   dimension: shipping_longitude {
+    group_label: "Shipping Details"
     type: number
     sql: ${TABLE}.shipping_longitude ;;
   }
 
   dimension: shipping_postal_code {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_postal_code ;;
   }
 
   dimension: shipping_state {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_state ;;
   }
 
   dimension: shipping_street {
+    group_label: "Shipping Details"
     type: string
     sql: ${TABLE}.shipping_street ;;
   }

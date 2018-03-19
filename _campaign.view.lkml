@@ -20,6 +20,7 @@ view: _campaign {
       year
     ]
     sql: ${TABLE}._fivetran_synced ;;
+    hidden: yes
   }
 
   dimension: actual_cost {

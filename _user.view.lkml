@@ -20,6 +20,7 @@ view: _user {
       year
     ]
     sql: ${TABLE}._fivetran_synced ;;
+    hidden: yes
   }
 
   dimension: about_me {
@@ -130,21 +131,25 @@ view: _user {
   }
 
   dimension: email_encoding_key {
+    group_label: "Email Preferences"
     type: string
     sql: ${TABLE}.email_encoding_key ;;
   }
 
   dimension: email_preferences_auto_bcc {
+    group_label: "Email Preferences"
     type: yesno
     sql: ${TABLE}.email_preferences_auto_bcc ;;
   }
 
   dimension: email_preferences_auto_bcc_stay_in_touch {
+    group_label: "Email Preferences"
     type: yesno
     sql: ${TABLE}.email_preferences_auto_bcc_stay_in_touch ;;
   }
 
   dimension: email_preferences_stay_in_touch_reminder {
+    group_label: "Email Preferences"
     type: yesno
     sql: ${TABLE}.email_preferences_stay_in_touch_reminder ;;
   }
@@ -442,351 +447,421 @@ view: _user {
   }
 
   dimension: user_permissions_call_center_auto_login {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_call_center_auto_login ;;
   }
 
   dimension: user_permissions_interaction_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_interaction_user ;;
   }
 
   dimension: user_permissions_jigsaw_prospecting_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_jigsaw_prospecting_user ;;
   }
 
   dimension: user_permissions_knowledge_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_knowledge_user ;;
   }
 
   dimension: user_permissions_marketing_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_marketing_user ;;
   }
 
   dimension: user_permissions_mobile_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_mobile_user ;;
   }
 
   dimension: user_permissions_offline_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_offline_user ;;
   }
 
   dimension: user_permissions_sfcontent_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_sfcontent_user ;;
   }
 
   dimension: user_permissions_siteforce_contributor_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_siteforce_contributor_user ;;
   }
 
   dimension: user_permissions_siteforce_publisher_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_siteforce_publisher_user ;;
   }
 
   dimension: user_permissions_support_user {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_support_user ;;
   }
 
   dimension: user_permissions_work_dot_com_user_feature {
+    group_label: "User Permissions"
     type: yesno
     sql: ${TABLE}.user_permissions_work_dot_com_user_feature ;;
   }
 
   dimension: user_preferences_activity_reminders_popup {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_activity_reminders_popup ;;
   }
 
   dimension: user_preferences_apex_pages_developer_mode {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_apex_pages_developer_mode ;;
   }
 
   dimension: user_preferences_cache_diagnostics {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_cache_diagnostics ;;
   }
 
   dimension: user_preferences_content_email_as_and_when {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_content_email_as_and_when ;;
   }
 
   dimension: user_preferences_content_no_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_content_no_email ;;
   }
 
   dimension: user_preferences_dis_comment_after_like_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_dis_comment_after_like_email ;;
   }
 
   dimension: user_preferences_dis_mentions_comment_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_dis_mentions_comment_email ;;
   }
 
   dimension: user_preferences_dis_prof_post_comment_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_dis_prof_post_comment_email ;;
   }
 
   dimension: user_preferences_disable_all_feeds_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_all_feeds_email ;;
   }
 
   dimension: user_preferences_disable_bookmark_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_bookmark_email ;;
   }
 
   dimension: user_preferences_disable_change_comment_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_change_comment_email ;;
   }
 
   dimension: user_preferences_disable_endorsement_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_endorsement_email ;;
   }
 
   dimension: user_preferences_disable_feedback_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_feedback_email ;;
   }
 
   dimension: user_preferences_disable_file_share_notifications_for_api {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_file_share_notifications_for_api ;;
   }
 
   dimension: user_preferences_disable_followers_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_followers_email ;;
   }
 
   dimension: user_preferences_disable_later_comment_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_later_comment_email ;;
   }
 
   dimension: user_preferences_disable_like_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_like_email ;;
   }
 
   dimension: user_preferences_disable_mentions_post_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_mentions_post_email ;;
   }
 
   dimension: user_preferences_disable_message_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_message_email ;;
   }
 
   dimension: user_preferences_disable_profile_post_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_profile_post_email ;;
   }
 
   dimension: user_preferences_disable_share_post_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_share_post_email ;;
   }
 
   dimension: user_preferences_disable_work_email {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_disable_work_email ;;
   }
 
   dimension: user_preferences_enable_auto_sub_for_feeds {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_enable_auto_sub_for_feeds ;;
   }
 
   dimension: user_preferences_event_reminders_checkbox_default {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_event_reminders_checkbox_default ;;
   }
 
   dimension: user_preferences_hide_chatter_onboarding_splash {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_hide_chatter_onboarding_splash ;;
   }
 
   dimension: user_preferences_hide_csndesktop_task {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_hide_csndesktop_task ;;
   }
 
   dimension: user_preferences_hide_csnget_chatter_mobile_task {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_hide_csnget_chatter_mobile_task ;;
   }
 
   dimension: user_preferences_hide_s_1_browser_ui {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_hide_s_1_browser_ui ;;
   }
 
   dimension: user_preferences_hide_second_chatter_onboarding_splash {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_hide_second_chatter_onboarding_splash ;;
   }
 
   dimension: user_preferences_jigsaw_list_user {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_jigsaw_list_user ;;
   }
 
   dimension: user_preferences_lightning_experience_preferred {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_lightning_experience_preferred ;;
   }
 
   dimension: user_preferences_path_assistant_collapsed {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_path_assistant_collapsed ;;
   }
 
   dimension: user_preferences_reminder_sound_off {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_reminder_sound_off ;;
   }
 
   dimension: user_preferences_show_city_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_city_to_external_users ;;
   }
 
   dimension: user_preferences_show_city_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_city_to_guest_users ;;
   }
 
   dimension: user_preferences_show_country_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_country_to_external_users ;;
   }
 
   dimension: user_preferences_show_country_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_country_to_guest_users ;;
   }
 
   dimension: user_preferences_show_email_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_email_to_external_users ;;
   }
 
   dimension: user_preferences_show_email_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_email_to_guest_users ;;
   }
 
   dimension: user_preferences_show_fax_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_fax_to_external_users ;;
   }
 
   dimension: user_preferences_show_fax_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_fax_to_guest_users ;;
   }
 
   dimension: user_preferences_show_manager_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_manager_to_external_users ;;
   }
 
   dimension: user_preferences_show_manager_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_manager_to_guest_users ;;
   }
 
   dimension: user_preferences_show_mobile_phone_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_mobile_phone_to_external_users ;;
   }
 
   dimension: user_preferences_show_mobile_phone_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_mobile_phone_to_guest_users ;;
   }
 
   dimension: user_preferences_show_postal_code_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_postal_code_to_external_users ;;
   }
 
   dimension: user_preferences_show_postal_code_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_postal_code_to_guest_users ;;
   }
 
   dimension: user_preferences_show_profile_pic_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_profile_pic_to_guest_users ;;
   }
 
   dimension: user_preferences_show_state_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_state_to_external_users ;;
   }
 
   dimension: user_preferences_show_state_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_state_to_guest_users ;;
   }
 
   dimension: user_preferences_show_street_address_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_street_address_to_external_users ;;
   }
 
   dimension: user_preferences_show_street_address_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_street_address_to_guest_users ;;
   }
 
   dimension: user_preferences_show_title_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_title_to_external_users ;;
   }
 
   dimension: user_preferences_show_title_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_title_to_guest_users ;;
   }
 
   dimension: user_preferences_show_work_phone_to_external_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_work_phone_to_external_users ;;
   }
 
   dimension: user_preferences_show_work_phone_to_guest_users {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_show_work_phone_to_guest_users ;;
   }
 
   dimension: user_preferences_sort_feed_by_comment {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_sort_feed_by_comment ;;
   }
 
   dimension: user_preferences_task_reminders_checkbox_default {
+    group_label: "User Preferences"
     type: yesno
     sql: ${TABLE}.user_preferences_task_reminders_checkbox_default ;;
   }

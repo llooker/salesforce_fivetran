@@ -92,7 +92,7 @@
     measures: [opportunity.count, opportunity.count_won]
     dynamic_fields:
     - table_calculation: opportunities_to_won
-      label: opportunities_to_won
+      label: "% Won Opportunities"
       expression: 1.0*${opportunity.count_won}/${opportunity.count}
       value_format: '#.0%'
     hidden_fields: [opportunity.count_won, opportunity.count]

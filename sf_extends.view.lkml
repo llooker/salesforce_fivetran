@@ -73,7 +73,7 @@ view: lead {
 
   dimension: name {
     html: <a href="https://na9.salesforce.com/{{ lead.id._value }}" target="_new">
-      <img src="https://www.salesforce.com/favicon.ico" height=16 width=16></a>
+      <img src="https://www.google.com/s2/favicons?domain=www.salesforce.com" height=16 width=16></a>
       {{ linked_value }}
       ;;
   }
