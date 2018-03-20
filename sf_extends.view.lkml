@@ -1,4 +1,9 @@
+# This file contains "extensions" of all your Salesforce views.
+# This is where you can edit and override auto-generated field settings such as
+# SQL definitions, front-end labels, hiding, grouping, and more.
+
 include: "_*"
+
 view: account {
   extends: [_account]
   # dimensions #
@@ -76,6 +81,7 @@ view: account {
   # measures #
 
   measure: percent_of_accounts {
+    description: "Percent of accounts out of the total number of accounts"
     type: percent_of_total
     sql: ${count} ;;
   }
@@ -96,7 +102,11 @@ view: account {
     sql: ${number_of_employees} ;;
   }
 
+  measure: count { label: "Number of Accounts" }
+
   measure: count_customers {
+    label: "Number of Customers"
+    description: "Number of accounts that are defined as customers"
     type: count
 
     filters: {
@@ -159,7 +169,10 @@ view: lead {
 
   # measures #
 
+  measure: count { label: "Number of Leads" }
+
   measure: converted_to_contact_count {
+    label: "Number of Leads Converted to Contacts"
     type: count
     drill_fields: [detail*]
 
@@ -170,6 +183,7 @@ view: lead {
   }
 
   measure: converted_to_account_count {
+    label: "Number of Leads Converted to Accounts"
     type: count
     drill_fields: [detail*]
 
@@ -180,6 +194,7 @@ view: lead {
   }
 
   measure: converted_to_opportunity_count {
+    label: "Number of Leads Converted to Opportunities"
     type: count
     drill_fields: [detail*]
 
@@ -190,18 +205,21 @@ view: lead {
   }
 
   measure: conversion_to_contact_percent {
+    label: "% Leads Converted to Contacts"
     sql: 100.00 * ${converted_to_contact_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
   }
 
   measure: conversion_to_account_percent {
+    label: "% Leads Converted to Accounts"
     sql: 100.00 * ${converted_to_account_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
   }
 
   measure: conversion_to_opportunity_percent {
+    label: "% Leads Converted to Opportunities"
     sql: 100.00 * ${converted_to_opportunity_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
@@ -345,7 +363,10 @@ view: opportunity {
     value_format: "$#,##0"
   }
 
+  measure: count { label: "Number of Opportunities" }
+
   measure: count_won {
+    label: "Number of Opportunities Won"
     type: count
 
     filters: {
@@ -362,6 +383,7 @@ view: opportunity {
   }
 
   measure: count_closed {
+    label: "Number of Closed Opportunities"
     type: count
 
     filters: {
@@ -371,6 +393,7 @@ view: opportunity {
   }
 
   measure: count_open {
+    label: "Number of Open Opportunities"
     type: count
 
     filters: {
@@ -380,6 +403,7 @@ view: opportunity {
   }
 
   measure: count_lost {
+    label: "Number of Lost Opportunities"
     type: count
 
     filters: {
@@ -408,6 +432,7 @@ view: opportunity {
   }
 
   measure: count_new_business_won {
+    label: "Number of New-Business Opportunities Won"
     type: count
 
     filters: {
@@ -424,6 +449,7 @@ view: opportunity {
   }
 
   measure: count_new_business {
+    label: "Number of New-Business Opportunities"
     type: count
 
     filters: {
@@ -441,6 +467,8 @@ view: campaign {
   dimension_group: _fivetran_synced { hidden: yes }
 
   dimension_group: system_modstamp { hidden: yes }
+
+  measure: count { label: "Number of Campaigns" }
 }
 
 view: user {
@@ -653,6 +681,8 @@ view: user {
     drill_fields: [account.name, opportunity.type, opportunity.closed_date, opportunity.total_acv]
   }
 
+  measure: count { label: "Number of Users" }
+
   # field sets for drilling #
 
   set: opportunity_set {
@@ -709,4 +739,8 @@ view: contact {
   }
 
   dimension_group: system_modstamp { hidden: yes }
+
+  # measures #
+
+  measure: count { label: "Number of Contacts" }
 }
