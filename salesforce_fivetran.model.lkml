@@ -78,6 +78,11 @@ explore: lead {
     relationship: many_to_one
   }
 
+  join: opportunity_stage {
+    sql_on: ${opportunity_stage.api_name} = ${opportunity.stage_name} ;;
+    relationship: one_to_one
+  }
+
   join: opportunity_owner {
     from: user
     sql_on: ${opportunity.owner_id} = ${opportunity_owner.id} ;;
@@ -88,6 +93,11 @@ explore: lead {
 explore: opportunity {
   sql_always_where: NOT ${opportunity.is_deleted}
     ;;
+
+  join: opportunity_stage {
+    sql_on: ${opportunity_stage.api_name} = ${opportunity.stage_name} ;;
+    relationship: one_to_one
+  }
 
   join: account {
     sql_on: ${opportunity.account_id} = ${account.id} ;;
@@ -125,6 +135,11 @@ explore: historical_snapshot  {
       type: inner
       relationship: many_to_one
       }
+
+  join: opportunity_stage {
+    sql_on: ${opportunity_stage.api_name} = ${historical_snapshot.stage_name_funnel} ;;
+    relationship: one_to_one
+  }
 
     join: account {
       sql_on: ${opportunity.account_id} = ${account.id} ;;

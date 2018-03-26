@@ -131,8 +131,8 @@
     type: looker_donut_multiples
     model: salesforce_fivetran
     explore: opportunity
-    dimensions: [account.business_segment, opportunity.forecast_category]
-    pivots: [opportunity.forecast_category]
+    dimensions: [account.business_segment]
+    pivots: [account.industry]
     measures: [account.count]
     listen:
       state: account.billing_state

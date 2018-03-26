@@ -259,6 +259,7 @@ view: _opportunity {
   dimension: stage_name {
     type: string
     sql: ${TABLE}.stage_name ;;
+    order_by_field: opportunity_stage.sort_order
   }
 
   dimension_group: system_modstamp {
