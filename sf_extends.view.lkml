@@ -1,12 +1,41 @@
+# This file contains "extensions" of all your Salesforce views.
+# This is where you can edit and override auto-generated field settings such as
+# SQL definitions, front-end labels, hiding, grouping, and more.
+
 include: "_*"
+
 view: account {
   extends: [_account]
   # dimensions #
 
- dimension: is_customer {
-   type: yesno
-  sql: ${type} LIKE 'Customer%' ;;
- }
+  dimension_group: _fivetran_synced { hidden: yes }
+
+  dimension: is_active_c {
+    label: "Is Active"
+    type: yesno
+    sql: ${TABLE}.active_c = 'Yes' ;;
+  }
+
+  dimension: is_customer {
+    type: yesno
+    sql: ${type} LIKE 'Customer%' ;;
+  }
+
+  dimension: billing_city { group_label: "Billing Details" }
+
+  dimension: billing_country { group_label: "Billing Details" }
+
+  dimension: billing_geocode_accuracy { group_label: "Billing Details" }
+
+  dimension: billing_latitude { group_label: "Billing Details" }
+
+  dimension: billing_longitude { group_label: "Billing Details" }
+
+  dimension: billing_postal_code { group_label: "Billing Details" }
+
+  dimension: billing_state { group_label: "Billing Details" }
+
+  dimension: billing_street { group_label: "Billing Details" }
 
   dimension: business_segment {
     type: string
@@ -31,9 +60,28 @@ view: account {
     }
   }
 
+  dimension: shipping_city { group_label: "Shipping Details" }
+
+  dimension: shipping_country { group_label: "Shipping Details" }
+
+  dimension: shipping_geocode_accuracy { group_label: "Shipping Details" }
+
+  dimension: shipping_latitude { group_label: "Shipping Details" }
+
+  dimension: shipping_longitude { group_label: "Shipping Details" }
+
+  dimension: shipping_postal_code { group_label: "Shipping Details" }
+
+  dimension: shipping_state { group_label: "Shipping Details" }
+
+  dimension: shipping_street { group_label: "Shipping Details" }
+
+  dimension_group: system_modstamp { hidden: yes }
+
   # measures #
 
   measure: percent_of_accounts {
+    description: "Percent of accounts out of the total number of accounts"
     type: percent_of_total
     sql: ${count} ;;
   }
@@ -54,7 +102,11 @@ view: account {
     sql: ${number_of_employees} ;;
   }
 
+  measure: count { label: "Number of Accounts" }
+
   measure: count_customers {
+    label: "Number of Customers"
+    description: "Number of accounts that are defined as customers"
     type: count
 
     filters: {
@@ -66,10 +118,27 @@ view: account {
 
 view: lead {
   extends: [_lead]
+  # dimensions #
+
+  dimension_group: _fivetran_synced { hidden: yes }
 
   dimension: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["time","date","week","month","raw"]}
   }
+
+  dimension: city { group_label: "Address" }
+
+  dimension: country { group_label: "Address" }
+
+  dimension: latitude { group_label: "Address" }
+
+  dimension: longitude { group_label: "Address" }
+
+  dimension: postal_code { group_label: "Address" }
+
+  dimension: state { group_label: "Address" }
+
+  dimension: street { group_label: "Address" }
 
   dimension: name {
     html: <a href="https://na9.salesforce.com/{{ lead.id._value }}" target="_new">
@@ -96,7 +165,14 @@ view: lead {
     description: "Number of Employees as reported on the Salesforce lead"
   }
 
+  dimension_group: system_modstamp { hidden: yes }
+
+  # measures #
+
+  measure: count { label: "Number of Leads" }
+
   measure: converted_to_contact_count {
+    label: "Number of Leads Converted to Contacts"
     type: count
     drill_fields: [detail*]
 
@@ -107,6 +183,7 @@ view: lead {
   }
 
   measure: converted_to_account_count {
+    label: "Number of Leads Converted to Accounts"
     type: count
     drill_fields: [detail*]
 
@@ -117,6 +194,7 @@ view: lead {
   }
 
   measure: converted_to_opportunity_count {
+    label: "Number of Leads Converted to Opportunities"
     type: count
     drill_fields: [detail*]
 
@@ -127,22 +205,27 @@ view: lead {
   }
 
   measure: conversion_to_contact_percent {
+    label: "% Leads Converted to Contacts"
     sql: 100.00 * ${converted_to_contact_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
   }
 
   measure: conversion_to_account_percent {
+    label: "% Leads Converted to Accounts"
     sql: 100.00 * ${converted_to_account_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
   }
 
   measure: conversion_to_opportunity_percent {
+    label: "% Leads Converted to Opportunities"
     sql: 100.00 * ${converted_to_opportunity_count} / NULLIF(${count},0) ;;
     type: number
     value_format: "0.00\%"
   }
+
+  # field sets for drilling #
 
   set: detail {
     fields: [
@@ -160,6 +243,8 @@ view: lead {
 view: opportunity {
   extends: [_opportunity]
   # dimensions #
+
+  dimension_group: _fivetran_synced { hidden: yes }
 
   dimension: is_lost {
     type: yesno
@@ -224,6 +309,8 @@ view: opportunity {
     sql: ${days_open} <=60 AND ${is_closed} = 'yes' AND ${is_won} = 'yes' ;;
   }
 
+  dimension_group: system_modstamp { hidden: yes }
+
   # measures #
 
   measure: total_revenue {
@@ -276,7 +363,10 @@ view: opportunity {
     value_format: "$#,##0"
   }
 
+  measure: count { label: "Number of Opportunities" }
+
   measure: count_won {
+    label: "Number of Opportunities Won"
     type: count
 
     filters: {
@@ -293,6 +383,7 @@ view: opportunity {
   }
 
   measure: count_closed {
+    label: "Number of Closed Opportunities"
     type: count
 
     filters: {
@@ -302,6 +393,7 @@ view: opportunity {
   }
 
   measure: count_open {
+    label: "Number of Open Opportunities"
     type: count
 
     filters: {
@@ -311,6 +403,7 @@ view: opportunity {
   }
 
   measure: count_lost {
+    label: "Number of Lost Opportunities"
     type: count
 
     filters: {
@@ -339,6 +432,7 @@ view: opportunity {
   }
 
   measure: count_new_business_won {
+    label: "Number of New-Business Opportunities Won"
     type: count
 
     filters: {
@@ -355,6 +449,7 @@ view: opportunity {
   }
 
   measure: count_new_business {
+    label: "Number of New-Business Opportunities"
     type: count
 
     filters: {
@@ -368,6 +463,12 @@ view: opportunity {
 
 view: campaign {
   extends: [_campaign]
+
+  dimension_group: _fivetran_synced { hidden: yes }
+
+  dimension_group: system_modstamp { hidden: yes }
+
+  measure: count { label: "Number of Campaigns" }
 }
 
 view: user {
@@ -381,6 +482,8 @@ view: user {
   filter: department_select {
     suggest_dimension: department
   }
+
+  dimension_group: _fivetran_synced { hidden: yes }
 
   # rep_comparitor currently depends on "account.business_segment" instead of the intended
   # "department" field. If a custom user table attribute "department" exists,
@@ -405,12 +508,182 @@ view: user {
     sql: datediff(days,${created_raw},current_date) ;;
   }
 
+  dimension: city { group_label: "Address" }
+
+  dimension: country { group_label: "Address" }
+
+  dimension: latitude { group_label: "Address" }
+
+  dimension: longitude { group_label: "Address" }
+
+  dimension: postal_code { group_label: "Address" }
+
+  dimension: state { group_label: "Address" }
+
+  dimension: street { group_label: "Address" }
+
+  dimension: email_encoding_key { group_label: "Email Preferences" }
+
+  dimension: email_preferences_auto_bcc { group_label: "Email Preferences" }
+
+  dimension: email_preferences_auto_bcc_stay_in_touch { group_label: "Email Preferences" }
+
+  dimension: email_preferences_stay_in_touch_reminder { group_label: "Email Preferences" }
+
+  dimension: user_permissions_call_center_auto_login { group_label: "User Permissions" }
+
+  dimension: user_permissions_interaction_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_jigsaw_prospecting_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_knowledge_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_marketing_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_mobile_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_offline_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_sfcontent_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_siteforce_contributor_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_siteforce_publisher_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_support_user { group_label: "User Permissions" }
+
+  dimension: user_permissions_work_dot_com_user_feature { group_label: "User Permissions" }
+
+  dimension: user_preferences_activity_reminders_popup { group_label: "User Preferences" }
+
+  dimension: user_preferences_apex_pages_developer_mode { group_label: "User Preferences" }
+
+  dimension: user_preferences_cache_diagnostics { group_label: "User Preferences" }
+
+  dimension: user_preferences_content_email_as_and_when { group_label: "User Preferences" }
+
+  dimension: user_preferences_content_no_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_dis_comment_after_like_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_dis_mentions_comment_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_dis_prof_post_comment_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_all_feeds_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_bookmark_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_change_comment_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_endorsement_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_feedback_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_file_share_notifications_for_api { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_followers_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_later_comment_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_like_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_mentions_post_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_message_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_profile_post_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_share_post_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_disable_work_email { group_label: "User Preferences" }
+
+  dimension: user_preferences_enable_auto_sub_for_feeds { group_label: "User Preferences" }
+
+  dimension: user_preferences_event_reminders_checkbox_default { group_label: "User Preferences" }
+
+  dimension: user_preferences_hide_chatter_onboarding_splash { group_label: "User Preferences" }
+
+  dimension: user_preferences_hide_csndesktop_task { group_label: "User Preferences" }
+
+  dimension: user_preferences_hide_csnget_chatter_mobile_task { group_label: "User Preferences" }
+
+  dimension: user_preferences_hide_s_1_browser_ui { group_label: "User Preferences" }
+
+  dimension: user_preferences_hide_second_chatter_onboarding_splash { group_label: "User Preferences" }
+
+  dimension: user_preferences_jigsaw_list_user { group_label: "User Preferences" }
+
+  dimension: user_preferences_lightning_experience_preferred { group_label: "User Preferences" }
+
+  dimension: user_preferences_path_assistant_collapsed { group_label: "User Preferences" }
+
+  dimension: user_preferences_reminder_sound_off { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_city_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_city_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_country_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_country_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_email_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_email_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_fax_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_fax_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_manager_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_manager_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_mobile_phone_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_mobile_phone_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_postal_code_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_postal_code_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_profile_pic_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_state_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_state_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_street_address_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_street_address_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_title_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_title_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_work_phone_to_external_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_show_work_phone_to_guest_users { group_label: "User Preferences" }
+
+  dimension: user_preferences_sort_feed_by_comment { group_label: "User Preferences" }
+
+  dimension: user_preferences_task_reminders_checkbox_default { group_label: "User Preferences" }
+
+  dimension_group: system_modstamp { hidden: yes }
+
+  # measures #
+
   measure: average_revenue_pipeline {
     type: number
     sql: ${opportunity.total_pipeline_revenue}/ NULLIF(${count},0) ;;
     value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
     drill_fields: [account.name, opportunity.type, opportunity.closed_date, opportunity.total_acv]
   }
+
+  measure: count { label: "Number of Users" }
+
+  # field sets for drilling #
 
   set: opportunity_set {
     fields: [average_revenue_pipeline]
@@ -419,6 +692,43 @@ view: user {
 
 view: contact {
   extends: [_contact]
+  # dimensions #
+
+  dimension_group: _fivetran_synced { hidden: yes }
+
+  dimension: mailing_city { group_label: "Mailing Details" }
+
+  dimension: mailing_country { group_label: "Mailing Details" }
+
+  dimension: mailing_geocode_accuracy { group_label: "Mailing Details" }
+
+  dimension: mailing_latitude { group_label: "Mailing Details" }
+
+  dimension: mailing_longitude { group_label: "Mailing Details" }
+
+  dimension: mailing_postal_code { group_label: "Mailing Details" }
+
+  dimension: mailing_state { group_label: "Mailing Details" }
+
+  dimension: mailing_street { group_label: "Mailing Details" }
+
+  dimension: other_city { group_label: "Other Contact Details" }
+
+  dimension: other_country { group_label: "Other Contact Details" }
+
+  dimension: other_geocode_accuracy { group_label: "Other Contact Details" }
+
+  dimension: other_latitude { group_label: "Other Contact Details" }
+
+  dimension: other_longitude { group_label: "Other Contact Details" }
+
+  dimension: other_phone { group_label: "Other Contact Details" }
+
+  dimension: other_postal_code { group_label: "Other Contact Details" }
+
+  dimension: other_state { group_label: "Other Contact Details" }
+
+  dimension: other_street { group_label: "Other Contact Details" }
 
   dimension: name {
     html: <a href="mailto:{{ contact.email._value }}" target="_blank">
@@ -427,4 +737,10 @@ view: contact {
       {{ linked_value }}
       ;;
   }
+
+  dimension_group: system_modstamp { hidden: yes }
+
+  # measures #
+
+  measure: count { label: "Number of Contacts" }
 }

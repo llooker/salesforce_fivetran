@@ -20,7 +20,6 @@ view: _lead {
       year
     ]
     sql: ${TABLE}._fivetran_synced ;;
-    hidden: yes
   }
 
   dimension: annual_revenue {

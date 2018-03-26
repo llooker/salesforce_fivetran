@@ -20,7 +20,6 @@ view: _contact {
       year
     ]
     sql: ${TABLE}._fivetran_synced ;;
-    hidden: yes
   }
 
   dimension: account_id {
@@ -256,49 +255,41 @@ view: _contact {
   }
 
   dimension: mailing_city {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_city ;;
   }
 
   dimension: mailing_country {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_country ;;
   }
 
   dimension: mailing_geocode_accuracy {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_geocode_accuracy ;;
   }
 
   dimension: mailing_latitude {
-    group_label: "Mailing Details"
     type: number
     sql: ${TABLE}.mailing_latitude ;;
   }
 
   dimension: mailing_longitude {
-    group_label: "Mailing Details"
     type: number
     sql: ${TABLE}.mailing_longitude ;;
   }
 
   dimension: mailing_postal_code {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_postal_code ;;
   }
 
   dimension: mailing_state {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_state ;;
   }
 
   dimension: mailing_street {
-    group_label: "Mailing Details"
     type: string
     sql: ${TABLE}.mailing_street ;;
   }
@@ -319,55 +310,46 @@ view: _contact {
   }
 
   dimension: other_city {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_city ;;
   }
 
   dimension: other_country {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_country ;;
   }
 
   dimension: other_geocode_accuracy {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_geocode_accuracy ;;
   }
 
   dimension: other_latitude {
-    group_label: "Other Contact Details"
     type: number
     sql: ${TABLE}.other_latitude ;;
   }
 
   dimension: other_longitude {
-    group_label: "Other Contact Details"
     type: number
     sql: ${TABLE}.other_longitude ;;
   }
 
   dimension: other_phone {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_phone ;;
   }
 
   dimension: other_postal_code {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_postal_code ;;
   }
 
   dimension: other_state {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_state ;;
   }
 
   dimension: other_street {
-    group_label: "Other Contact Details"
     type: string
     sql: ${TABLE}.other_street ;;
   }
