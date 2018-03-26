@@ -1,9 +1,10 @@
-view: sf_opportunity_snapshot {
+view: historical_snapshot {
   derived_table: {
+    datagroup_trigger: fivetran_synced
     sql: with dates as (
-      --Generate 5 years of dates. Thanks Lloyd! https://discourse.looker.com/t/generating-a-numbers-table-in-mysql-and-redshift/482/5
-          SELECT date
-          FROM UNNEST(GENERATE_DATE_ARRAY(DATE_SUB(CURRENT_DATE, INTERVAL 5 YEAR), CURRENT_DATE)) date
+      --Generate 5 years of dates.
+          select date
+          from UNNEST(GENERATE_DATE_ARRAY(DATE_SUB(CURRENT_DATE, INTERVAL 5 YEAR), CURRENT_DATE)) date
       ),
 
        snapshot_window as (
@@ -11,8 +12,7 @@ view: sf_opportunity_snapshot {
                   , coalesce(lead(EXTRACT(date FROM created_date),1) over(partition by opportunity_id order by created_date), current_date) as stage_end
                     from `fivetran-fivetran-fivetran-loo.salesforce.opportunity_history` AS opportunity_history
       )
-
-
+    -- https://discourse.looker.com/t/analytic-block-state-or-status-data-and-slowly-changing-dimensions/1937
       select dates.date as observation_date
            , snapshot_window.*
             from snapshot_window
@@ -28,8 +28,11 @@ view: sf_opportunity_snapshot {
     drill_fields: [detail*]
   }
 
-  dimension: observation_date {
-    type: date
+  dimension_group: snapshot {
+    type: time
+    datatype: date
+    description: "What snapshot date are you interetsed in?"
+    timeframes: [time, date, week, month]
     sql: ${TABLE}.observation_date ;;
   }
 
@@ -38,19 +41,17 @@ view: sf_opportunity_snapshot {
     sql: ${TABLE}.id ;;
   }
 
-  dimension_group: _fivetran_synced {
-    type: time
-    sql: ${TABLE}._fivetran_synced ;;
-  }
-
   dimension: amount {
     type: number
     sql: ${TABLE}.amount ;;
   }
 
-  dimension_group: close_date {
+  dimension_group: close {
     type: time
-    sql: ${TABLE}.close_date ;;
+    datatype: date
+    description: "At the time of snapshot, what was the projected close date?"
+    timeframes: [date, week, month]
+    sql: EXTRACT(date from ${TABLE}.close_date) ;;
   }
 
   dimension: created_by_id {
@@ -58,8 +59,10 @@ view: sf_opportunity_snapshot {
     sql: ${TABLE}.created_by_id ;;
   }
 
-  dimension_group: created_date {
+  dimension_group: created {
     type: time
+    datatype: date
+    timeframes: [date, week, month]
     sql: ${TABLE}.created_date ;;
   }
 
@@ -88,7 +91,48 @@ view: sf_opportunity_snapshot {
     sql: ${TABLE}.probability ;;
   }
 
-  dimension: stage_name {
+  dimension: probability_tier {
+    case: {
+      when: {
+        sql: ${probability} = 100 ;;
+        label: "Won"
+      }
+
+      when: {
+        sql: ${probability} >= 80 ;;
+        label: "80 - 99%"
+      }
+
+      when: {
+        sql: ${probability} >= 60 ;;
+        label: "60 - 79%"
+      }
+
+      when: {
+        sql: ${probability} >= 40 ;;
+        label: "40 - 59%"
+      }
+
+      when: {
+        sql: ${probability} >= 20 ;;
+        label: "20 - 39%"
+      }
+
+      when: {
+        sql: ${probability} > 0 ;;
+        label: "1 - 19%"
+      }
+
+      when: {
+        sql: ${probability} = 0 ;;
+        label: "Lost"
+      }
+    }
+  }
+
+  dimension: stage_name_funnel {
+    alias: [stage_name]
+    description: "At the time of snapshot, what funnel stage was the prospect in?"
     type: string
     sql: ${TABLE}.stage_name ;;
   }
@@ -98,28 +142,39 @@ view: sf_opportunity_snapshot {
     sql: ${TABLE}.system_modstamp ;;
   }
 
-  dimension: stage_end {
-    type: date
+  dimension_group: stage_end {
+    type: time
+    datatype: date
+    hidden: yes
+    timeframes: [time, date, week, month]
     sql: ${TABLE}.stage_end ;;
+  }
+
+  measure: total_amount {
+    type: sum
+    description: "At the time of snapshot, what was the total projected ACV?"
+    sql: ${amount} ;;
+    value_format: "$#,##0"
+    drill_fields: [account.name, snapshot_date, close_date, amount, probability, stage_name_funnel]
+  }
+
+  measure: count_opportunities {
+    type: count_distinct
+    sql: ${opportunity_id} ;;
   }
 
   set: detail {
     fields: [
-      observation_date,
+      snapshot_date,
       id,
-      _fivetran_synced_time,
       amount,
-      close_date_time,
       created_by_id,
-      created_date_time,
       expected_revenue,
       forecast_category,
-      is_deleted,
       opportunity_id,
       probability,
-      stage_name,
-      system_modstamp_time,
-      stage_end
+      stage_name_funnel,
+
     ]
   }
 }
