@@ -50,8 +50,8 @@
     interpolation: step
     row: 0
     col: 0
-    width: 8
-    height: 6
+    width: 12
+    height: 12
   - title: Quarterly Pipeline Development Report - Q4
     name: Quarterly Pipeline Development Report - Q4
     model: salesforce_fivetran
@@ -66,7 +66,8 @@
     filters:
       historical_snapshot.close_date: after 2 quarters ago
       historical_snapshot.snapshot_date: before 0 minutes ago
-      historical_snapshot.stage_name_funnel: Closed Won,Negotiation/Review,Perception Analysis,Proposal/Price Quote
+      historical_snapshot.stage_name_funnel: Closed Won,Negotiation/Review,Perception
+        Analysis,Proposal/Price Quote
     sorts:
     - historical_snapshot.snapshot_date
     - historical_snapshot.snapshot_month desc
@@ -106,6 +107,8 @@
       line_value: '7200000'
       label: Goal ($1.2M)
       color: purple
+      __FILE: salesforce_block/historical_pipeline.sf.dashboard.lookml
+      __LINE_NUM: 100
     colors:
     - black
     - "#1FD110"
@@ -120,6 +123,6 @@
     - 20 - 39%
     - 1 - 19%
     row: 0
-    col: 8
-    width: 8
-    height: 6
+    col: 12
+    width: 12
+    height: 12

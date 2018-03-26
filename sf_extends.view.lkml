@@ -442,7 +442,7 @@ view: opportunity {
 
     filters: {
       field: opportunity.type
-      value: "\"New Business\""
+      value: "\"New Customer\""
     }
 
     drill_fields: [opportunity.id, account.name, type]
@@ -454,7 +454,7 @@ view: opportunity {
 
     filters: {
       field: opportunity.type
-      value: "\"New Business\""
+      value: "\"New Customer\""
     }
 
     drill_fields: [opportunity.id, account.name, type]
