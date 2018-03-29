@@ -22,19 +22,12 @@ view: account {
   }
 
   dimension: billing_city { group_label: "Billing Details" }
-
   dimension: billing_country { group_label: "Billing Details" }
-
   dimension: billing_geocode_accuracy { group_label: "Billing Details" }
-
   dimension: billing_latitude { group_label: "Billing Details" }
-
   dimension: billing_longitude { group_label: "Billing Details" }
-
   dimension: billing_postal_code { group_label: "Billing Details" }
-
   dimension: billing_state { group_label: "Billing Details" }
-
   dimension: billing_street { group_label: "Billing Details" }
 
   dimension: business_segment {
@@ -61,19 +54,12 @@ view: account {
   }
 
   dimension: shipping_city { group_label: "Shipping Details" }
-
   dimension: shipping_country { group_label: "Shipping Details" }
-
   dimension: shipping_geocode_accuracy { group_label: "Shipping Details" }
-
   dimension: shipping_latitude { group_label: "Shipping Details" }
-
   dimension: shipping_longitude { group_label: "Shipping Details" }
-
   dimension: shipping_postal_code { group_label: "Shipping Details" }
-
   dimension: shipping_state { group_label: "Shipping Details" }
-
   dimension: shipping_street { group_label: "Shipping Details" }
 
   dimension_group: system_modstamp { hidden: yes }
@@ -122,22 +108,31 @@ view: lead {
 
   dimension_group: _fivetran_synced { hidden: yes }
 
+  dimension: convert_to_contact {
+    label: "Days to Contact Conversion"
+    description: "Number of days it took to convert the lead into a contact"
+    type: number
+    sql: DATE_DIFF(${converted_date}, ${created_date}, DAY) ;;
+  }
+
+  # Typically, an opportunity is automatically created when a lead is converted to a contact.
+  dimension: convert_to_opportunity {
+    label: "Days to Opp. Conversion"
+    description: "Number of days it took to convert the lead into an opportunity"
+    type: number
+    sql: DATE_DIFF(${opportunity.created_date}, ${created_date}, DAY) ;;
+  }
+
   dimension: created {
     #X# Invalid LookML inside "dimension": {"timeframes":["time","date","week","month","raw"]}
   }
 
   dimension: city { group_label: "Address" }
-
   dimension: country { group_label: "Address" }
-
   dimension: latitude { group_label: "Address" }
-
   dimension: longitude { group_label: "Address" }
-
   dimension: postal_code { group_label: "Address" }
-
   dimension: state { group_label: "Address" }
-
   dimension: street { group_label: "Address" }
 
   dimension: name {
@@ -170,6 +165,22 @@ view: lead {
   # measures #
 
   measure: count { label: "Number of Leads" }
+
+  measure: avg_convert_to_contact {
+    label: "Average Days to Contact Conversion"
+    description: "Average number of days it took to convert the lead into a contact"
+    type: average
+    sql: ${convert_to_contact} ;;
+    value_format_name: decimal_1
+  }
+
+  measure: avg_convert_to_opportunity {
+    label: "Average Days to Opp. Conversion"
+    description: "Average number of days it took to convert the lead into an opportunity"
+    type: average
+    sql: ${convert_to_opportunity} ;;
+    value_format_name: decimal_1
+  }
 
   measure: converted_to_contact_count {
     label: "Number of Leads Converted to Contacts"
@@ -299,8 +310,9 @@ view: opportunity {
   }
 
   dimension: days_open {
+    description: "Number of days from opportunity creation to close. If not yet closed, this uses today's date."
     type: number
-    sql: datediff(days, ${created_raw}, coalesce(${close_raw}, current_date) ) ;;
+    sql: DATE_DIFF(coalesce(${close_date}, current_date), ${created_date}, DAY) ;;
   }
 
   dimension: created_to_closed_in_60 {
@@ -465,7 +477,6 @@ view: campaign {
   extends: [_campaign]
 
   dimension_group: _fivetran_synced { hidden: yes }
-
   dimension_group: system_modstamp { hidden: yes }
 
   measure: count { label: "Number of Campaigns" }
@@ -492,6 +503,16 @@ view: opportunity_stage {
   dimension: sort_order { hidden: yes }
   dimension_group: system_modstamp { hidden: yes }
 
+}
+
+view: opportunity_history {
+  extends: [_opportunity_history]
+
+  dimension_group: _fivetran_synced { hidden: yes }
+  dimension: created_by_id { hidden: yes }
+  dimension_group: created { label: "Snapshot" }
+  dimension: is_deleted { hidden: yes }
+  dimension_group: system_modstamp { hidden: yes }
 }
 
 view: user {
@@ -528,169 +549,92 @@ view: user {
 
   dimension: age_in_months {
     type: number
-    sql: datediff(days,${created_raw},current_date) ;;
+    sql: DATE_DIFF(current_date, ${created_date}, MONTH) ;;
   }
 
   dimension: city { group_label: "Address" }
-
   dimension: country { group_label: "Address" }
-
   dimension: latitude { group_label: "Address" }
-
   dimension: longitude { group_label: "Address" }
-
   dimension: postal_code { group_label: "Address" }
-
   dimension: state { group_label: "Address" }
-
   dimension: street { group_label: "Address" }
 
   dimension: email_encoding_key { group_label: "Email Preferences" }
-
   dimension: email_preferences_auto_bcc { group_label: "Email Preferences" }
-
   dimension: email_preferences_auto_bcc_stay_in_touch { group_label: "Email Preferences" }
-
   dimension: email_preferences_stay_in_touch_reminder { group_label: "Email Preferences" }
 
   dimension: user_permissions_call_center_auto_login { group_label: "User Permissions" }
-
   dimension: user_permissions_interaction_user { group_label: "User Permissions" }
-
   dimension: user_permissions_jigsaw_prospecting_user { group_label: "User Permissions" }
-
   dimension: user_permissions_knowledge_user { group_label: "User Permissions" }
-
   dimension: user_permissions_marketing_user { group_label: "User Permissions" }
-
   dimension: user_permissions_mobile_user { group_label: "User Permissions" }
-
   dimension: user_permissions_offline_user { group_label: "User Permissions" }
-
   dimension: user_permissions_sfcontent_user { group_label: "User Permissions" }
-
   dimension: user_permissions_siteforce_contributor_user { group_label: "User Permissions" }
-
   dimension: user_permissions_siteforce_publisher_user { group_label: "User Permissions" }
-
   dimension: user_permissions_support_user { group_label: "User Permissions" }
-
   dimension: user_permissions_work_dot_com_user_feature { group_label: "User Permissions" }
 
   dimension: user_preferences_activity_reminders_popup { group_label: "User Preferences" }
-
   dimension: user_preferences_apex_pages_developer_mode { group_label: "User Preferences" }
-
   dimension: user_preferences_cache_diagnostics { group_label: "User Preferences" }
-
   dimension: user_preferences_content_email_as_and_when { group_label: "User Preferences" }
-
   dimension: user_preferences_content_no_email { group_label: "User Preferences" }
-
   dimension: user_preferences_dis_comment_after_like_email { group_label: "User Preferences" }
-
   dimension: user_preferences_dis_mentions_comment_email { group_label: "User Preferences" }
-
   dimension: user_preferences_dis_prof_post_comment_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_all_feeds_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_bookmark_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_change_comment_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_endorsement_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_feedback_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_file_share_notifications_for_api { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_followers_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_later_comment_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_like_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_mentions_post_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_message_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_profile_post_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_share_post_email { group_label: "User Preferences" }
-
   dimension: user_preferences_disable_work_email { group_label: "User Preferences" }
-
   dimension: user_preferences_enable_auto_sub_for_feeds { group_label: "User Preferences" }
-
   dimension: user_preferences_event_reminders_checkbox_default { group_label: "User Preferences" }
-
   dimension: user_preferences_hide_chatter_onboarding_splash { group_label: "User Preferences" }
-
   dimension: user_preferences_hide_csndesktop_task { group_label: "User Preferences" }
-
   dimension: user_preferences_hide_csnget_chatter_mobile_task { group_label: "User Preferences" }
-
   dimension: user_preferences_hide_s_1_browser_ui { group_label: "User Preferences" }
-
   dimension: user_preferences_hide_second_chatter_onboarding_splash { group_label: "User Preferences" }
-
   dimension: user_preferences_jigsaw_list_user { group_label: "User Preferences" }
-
   dimension: user_preferences_lightning_experience_preferred { group_label: "User Preferences" }
-
   dimension: user_preferences_path_assistant_collapsed { group_label: "User Preferences" }
-
   dimension: user_preferences_reminder_sound_off { group_label: "User Preferences" }
-
   dimension: user_preferences_show_city_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_city_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_country_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_country_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_email_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_email_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_fax_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_fax_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_manager_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_manager_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_mobile_phone_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_mobile_phone_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_postal_code_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_postal_code_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_profile_pic_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_state_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_state_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_street_address_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_street_address_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_title_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_title_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_work_phone_to_external_users { group_label: "User Preferences" }
-
   dimension: user_preferences_show_work_phone_to_guest_users { group_label: "User Preferences" }
-
   dimension: user_preferences_sort_feed_by_comment { group_label: "User Preferences" }
-
   dimension: user_preferences_task_reminders_checkbox_default { group_label: "User Preferences" }
 
   dimension_group: system_modstamp { hidden: yes }
@@ -720,37 +664,22 @@ view: contact {
   dimension_group: _fivetran_synced { hidden: yes }
 
   dimension: mailing_city { group_label: "Mailing Details" }
-
   dimension: mailing_country { group_label: "Mailing Details" }
-
   dimension: mailing_geocode_accuracy { group_label: "Mailing Details" }
-
   dimension: mailing_latitude { group_label: "Mailing Details" }
-
   dimension: mailing_longitude { group_label: "Mailing Details" }
-
   dimension: mailing_postal_code { group_label: "Mailing Details" }
-
   dimension: mailing_state { group_label: "Mailing Details" }
-
   dimension: mailing_street { group_label: "Mailing Details" }
 
   dimension: other_city { group_label: "Other Contact Details" }
-
   dimension: other_country { group_label: "Other Contact Details" }
-
   dimension: other_geocode_accuracy { group_label: "Other Contact Details" }
-
   dimension: other_latitude { group_label: "Other Contact Details" }
-
   dimension: other_longitude { group_label: "Other Contact Details" }
-
   dimension: other_phone { group_label: "Other Contact Details" }
-
   dimension: other_postal_code { group_label: "Other Contact Details" }
-
   dimension: other_state { group_label: "Other Contact Details" }
-
   dimension: other_street { group_label: "Other Contact Details" }
 
   dimension: name {
