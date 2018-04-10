@@ -86,6 +86,7 @@ view: account {
   measure: average_number_of_employees {
     type: average
     sql: ${number_of_employees} ;;
+    value_format_name: decimal_1
   }
 
   measure: count { label: "Number of Accounts" }
@@ -315,10 +316,18 @@ view: opportunity {
     sql: DATE_DIFF(coalesce(${close_date}, current_date), ${created_date}, DAY) ;;
   }
 
+  dimension: days_to_closed_won {
+    description: "Number of days from opportunity creation to Closed-Won status"
+    type: number
+    sql: CASE WHEN ${is_closed} AND ${is_won} THEN ${days_open}
+              ELSE null
+              END ;;
+  }
+
   dimension: created_to_closed_in_60 {
     hidden: yes
     type: yesno
-    sql: ${days_open} <=60 AND ${is_closed} = 'yes' AND ${is_won} = 'yes' ;;
+    sql: ${days_open} <=60 AND ${is_closed} AND ${is_won} ;;
   }
 
   dimension_group: system_modstamp { hidden: yes }
@@ -365,8 +374,9 @@ view: opportunity {
       field: is_closed
       value: "No"
     }
-
-    value_format: "[>=1000000]0.00,,\"M\";[>=1000]0.00,\"K\";$0.00"
+    value_format: "$#,##0"
+    # value_format: "[>=1000000]$0.00,,\"M\";[>=1000]$0.00,\"K\";$0.00"
+    ## The above will cause values to display like $1.25M / $100.00K / $9.99
   }
 
   measure: average_deal_size {
@@ -392,7 +402,17 @@ view: opportunity {
   measure: average_days_open {
     type: average
     sql: ${days_open} ;;
+    value_format_name: decimal_1
   }
+
+  measure: average_days_to_closed_won {
+    type: average
+    sql: ${days_to_closed_won} ;;
+    value_format_name: decimal_1
+  }
+  ## BQ documentation on AVERAGE function:
+  # If a row contains a missing or null value, it is not factored into the calculation.
+  # If the entire column contains no values, the function returns a null value.
 
   measure: count_closed {
     label: "Number of Closed Opportunities"
