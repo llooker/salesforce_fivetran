@@ -1,15 +1,15 @@
 # Salesforce from Fivetran
-Fivetran’s Salesforce Block makes it easy for business to build a comprehensive sales analytics tool to understand their unique sales process with customizable reports and analysis at any level of aggregation.
+Fivetran’s Salesforce Block makes it easy for business to build a comprehensive sales and customer analytics tool to understand their unique sales process with customizable reports and analysis at any level of aggregation.
 
 ### What does this Block do for me?
 
-**(1) Go Beyond Simple Salesforce Reports** - Salesforce reports can be cumbersome and limited. With Looker, Fivetran and this block, dive deper into your sales and customer success analysis to find out where your customers begin and how they progresses through the entire customer lifecycle.
+**(1) Go Beyond Simple Salesforce Reports** - Salesforce reports can be cumbersome and limited. With Looker, Fivetran and this block, dive deeper into your sales and customer success analysis to find out where your customers begin and how they progress through the entire customer lifecycle.
 
-**(2) Historical and Cummulative Analysis** - This blocks adds historical analysis for opportunities to answer questions about when pipelines were created and how long they took to close, over time. Additionally, easily find calculations like customer lifetime value (LTV).
+**(2) Historical and Cumulative Analysis** - This block adds historical analysis for opportunities to answer questions about when pipelines were created and how long they took to close, over time. Additionally, easily calculate customer lifetime value (LTV) and other metrics.
 
 **(3) Combine Multiple Data Sources** - Through other Fivetran connectors, combine your Salesforce data with data from your operational systems, other SaaS apps, and more to get a holistic view of all your customer data in one central view.
 
-**(4) Enterprise Data Platform** - Take advantage of Looker's data platform functionality, including [data actions](https://discourse.looker.com/t/data-actions/3573), scheduling, permissions, alerting, parameterization (each user can only see their own data), and more. Get immediate alerts when budgets are exceeded, ads are underperforming, or any other business criteria.
+**(4) Enterprise Data Platform** - Take advantage of Looker's data platform functionality, including [data actions](https://discourse.looker.com/t/data-actions/3573), scheduling, permissions, alerting, parameterization (each user can only see their own data), and more. Get immediate alerts when deals are closed, customers are at risk, or any other business criteria.
 
 **(5) Usable / Shareable Dashboards** - Create centralized dashboards for the entire team, and departmental or individual dashboards for each user. Rest easy knowing everyone is looking at the same information at all times. Then schedule the dashboards for emails or alerts, period-end reporting, anomaly detection, or whatever else serves your use-case.
 
@@ -38,7 +38,7 @@ In order to use the Historical Snapshot explore, make sure to enable [Field Hist
 
 * **Base Views** - Generate fresh views for each table that starts with an _underscore so that you get any customizations to your Salesforce instance (see above).
 
-* **Company Specific Logic** - Inside of sf_extends you'll find some assumptions about your sales stages, what you consider a customer, what the amount fields in an opportunity mean and more. Work with your Salesforce administror to make sure you've mapped the logic correctly.
+* **Company Specific Logic** - Inside of sf_extends you'll find some assumptions about your sales stages, what you consider a customer, what the amount fields in an opportunity mean and more. Work with your Salesforce admin to make sure you've mapped the logic correctly.
 
 * **Dashboards** - Rename the model in each LookML Dashboard element from "salesforce_fivetran" to the model name you've selected. This is easily accomplished using a global Find & Replace (available in the top right of your screen).
 
@@ -49,4 +49,4 @@ In order to take advantage of the configured speed, you'll find a [datagroup](ht
 
 ### What if I find an error? Have suggestions for improvements?
 
-Great! Blocks were designed for continuous improvement through the help of the entire Looker community, and we'd love your input. To log an error or improvement recommentation, simply create a "New Issue" in the corresponding [Github repo for this Block](https://github.com/llooker/salesforce_fivetran/issues). Please be as detailed as possible in your explanation, and we'll address it as quickly as we can.
+Great! Blocks were designed for continuous improvement through the help of the entire Looker community, and we'd love your input. To log an error or improvement recommendation, simply create a "New Issue" in the corresponding [Github repo for this Block](https://github.com/llooker/salesforce_fivetran/issues). Please be as detailed as possible in your explanation, and we'll address it as quickly as we can.
