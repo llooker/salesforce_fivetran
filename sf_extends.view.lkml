@@ -310,6 +310,13 @@ view: opportunity {
     #X# Invalid LookML inside "dimension": {"timeframes":["date","week","month","raw"]}
   }
 
+  dimension: created_is_before_close_date {
+    hidden: yes
+    #this is a data quality issue with a specific Demo instance, disable if not needed!
+    type: yesno
+    sql: ${close_raw} <= ${created_raw} ;;
+  }
+
   dimension: days_open {
     description: "Number of days from opportunity creation to close. If not yet closed, this uses today's date."
     type: number
@@ -479,6 +486,7 @@ view: opportunity {
 
     drill_fields: [opportunity.id, account.name, type]
   }
+
 
   measure: count_new_business {
     label: "Number of New-Business Opportunities"
