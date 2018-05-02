@@ -311,7 +311,7 @@ view: opportunity {
   }
 
   dimension: created_is_before_close_date {
-    hidden: yes
+    hidden: no
     #this is a data quality issue with a specific Demo instance, disable if not needed!
     type: yesno
     sql: ${close_raw} <= ${created_raw} ;;
