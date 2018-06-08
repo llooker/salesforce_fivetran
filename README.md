@@ -36,6 +36,8 @@ In order to use the Historical Snapshot explore, make sure to enable [Field Hist
 
 ### Implementation Instructions / Required Customizations
 
+* **Schama Names** - You may need to change the table schema names, do a find/replace for `sql_table_name: salesforce.`
+
 * **Base Views** - Generate fresh views for each table that starts with an _underscore so that you get any customizations to your Salesforce instance (see above).
 
 * **Company Specific Logic** - Inside of sf_extends you'll find some assumptions about your sales stages, what you consider a customer, what the amount fields in an opportunity mean and more. Work with your Salesforce admin to make sure you've mapped the logic correctly.
