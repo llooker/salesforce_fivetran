@@ -41,7 +41,7 @@
     totals_color: "#808080"
     series_types: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 0
     col: 0
     width: 6
@@ -85,7 +85,7 @@
     totals_color: "#808080"
     series_types: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 0
     col: 18
     width: 6
@@ -129,7 +129,7 @@
     totals_color: "#808080"
     series_types: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 0
     col: 12
     width: 6
@@ -173,7 +173,7 @@
     totals_color: "#808080"
     series_types: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 0
     col: 6
     width: 6
@@ -270,7 +270,7 @@
     label_value_format: ''
     hidden_series: []
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 3
     col: 0
     width: 24
@@ -321,7 +321,7 @@
     - "#7FCDAE"
     series_colors: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 12
     col: 8
     width: 8
@@ -372,7 +372,7 @@
     - "#EE7772"
     series_colors: {}
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 12
     col: 0
     width: 8
@@ -429,7 +429,7 @@
     series_types: {}
     valueFormat: m/dd
     listen:
-      Opportunity Creation Date: account_owner.created_date
+      Opportunity Creation Date: opportunity.created_date
     row: 12
     col: 16
     width: 8
@@ -444,4 +444,4 @@
     model: salesforce_fivetran
     explore: opportunity
     listens_to_filters: []
-    field: account_owner.created_date
+    field: account.created_date
